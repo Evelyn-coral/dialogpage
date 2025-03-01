@@ -53,7 +53,7 @@ function sendRequestToChatGPT(message) {
     fetch('https://api.chatanywhere.com.cn/v1/chat/completions', {
         method: 'POST',
         headers: {
-            'Authorization': 'sk-SmwGRrvyfNq8Qx073Sg6bWO2UB2ogIXzyU9IRu8XxywCPVhk',
+            'Authorization': 'sk-SmwGRrvyfNq8Qx073Sg6bWO2UB2ogIXzyU9IRu8XxywCPVhk ',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(request)
@@ -68,57 +68,73 @@ function sendRequestToChatGPT(message) {
         console.log('解析后的HTML:', marked.parse(reply));
 
         // 将服务器返回的回复添加到聊天记录中
-        const botMessage = document.createElement('div');
-        botMessage.className = 'message reply-message';
-        
-        const botIcon = document.createElement('img');
-        botIcon.src = 'robot-icon.png'; // 替换为实际的机器人图标路径
-        botIcon.className = 'robot-icon';
-        
-        const botText = document.createElement('span');
-        botText.innerHTML = marked.parse(reply); // 使用 marked 解析 Markdown 内容
-        
-        botMessage.appendChild(botIcon);
-        botMessage.appendChild(botText);
-        
-        conversation.appendChild(botMessage);
-
-        // 代码高亮
-        document.querySelectorAll('pre code').forEach((block) => {
-            block.classList.add('code-block'); // 添加代码块样式
-            hljs.highlightBlock(block);
-
-            // 添加复制按钮
-            const copyButton = document.createElement('button');
-            copyButton.className = 'copy-button';
-            copyButton.textContent = '复制代码';
-            block.parentNode.appendChild(copyButton);
-
-            // 初始化 Clipboard.js
-            const clipboard = new ClipboardJS(copyButton, {
-                target: () => block
-            });
-
-            clipboard.on('success', (e) => {
-                copyButton.textContent = '已复制';
-                setTimeout(() => {
-                    copyButton.textContent = '复制代码';
-                }, 2000);
-                e.clearSelection();
-            });
-
-            clipboard.on('error', (e) => {
-                copyButton.textContent = '复制失败';
-                setTimeout(() => {
-                    copyButton.textContent = '复制代码';
-                }, 2000);
-            });
-        });
+        streamReply(reply);
     })
     .catch(error => {
         console.error('请求ChatGPT时出错:', error);
     });
 }
+
+
+function streamReply(reply) {
+    const conversation = document.getElementById('conversation');
+    const botMessage = document.createElement('div');
+    botMessage.className = 'message reply-message';
+    
+    const botIcon = document.createElement('img');
+    botIcon.src = 'robot-icon.png'; // 替换为实际的机器人图标路径
+    botIcon.className = 'robot-icon';
+    
+    const botText = document.createElement('span');
+    botMessage.appendChild(botIcon);
+    botMessage.appendChild(botText);
+    conversation.appendChild(botMessage);
+
+    let index = 0;
+    let tempReply = '';
+    function showNextLetter() {
+        if (index < reply.length) {
+            tempReply += reply.charAt(index);
+            botText.innerHTML = marked.parse(tempReply); // 使用 marked 解析 Markdown 内容
+            index++;
+            setTimeout(showNextLetter, 50); // 设置延迟时间，控制字母出现的速度
+        } else {
+            // 代码高亮
+            document.querySelectorAll('pre code').forEach((block) => {
+                block.classList.add('code-block'); // 添加代码块样式
+                hljs.highlightBlock(block);
+
+                // 添加复制按钮
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = '复制代码';
+                block.parentNode.appendChild(copyButton);
+
+                // 初始化 Clipboard.js
+                const clipboard = new ClipboardJS(copyButton, {
+                    target: () => block
+                });
+
+                clipboard.on('success', (e) => {
+                    copyButton.textContent = '已复制';
+                    setTimeout(() => {
+                        copyButton.textContent = '复制代码';
+                    }, 2000);
+                    e.clearSelection();
+                });
+
+                clipboard.on('error', (e) => {
+                    copyButton.textContent = '复制失败';
+                    setTimeout(() => {
+                        copyButton.textContent = '复制代码';
+                    }, 2000);
+                });
+            });
+        }
+    }
+    showNextLetter(); // 开始流式输出
+}
+
 
 function addMessageToChatLog(message, className) {
     const conversation = document.getElementById('conversation');
