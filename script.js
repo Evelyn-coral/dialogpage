@@ -33,6 +33,7 @@ function submitInput() {
         const message = userInput.value;
         userInput.value = '';
         adjustHeight();
+        scrollToBottom(); // 自动滚动到最底端
         
         // 发送消息到服务器（ChatGPT）进行处理
         sendRequestToChatGPT(message);
@@ -89,6 +90,7 @@ function streamReply(reply) {
     botMessage.appendChild(botIcon);
     botMessage.appendChild(botText);
     conversation.appendChild(botMessage);
+    scrollToBottom(); // 自动滚动到最底端
 
     let index = 0;
     let tempReply = '';
@@ -98,6 +100,7 @@ function streamReply(reply) {
             botText.innerHTML = marked.parse(tempReply); // 使用 marked 解析 Markdown 内容
             index++;
             setTimeout(showNextLetter, 50); // 设置延迟时间，控制字母出现的速度
+            scrollToBottom(); // 自动滚动到最底端
         } else {
             // 代码高亮
             document.querySelectorAll('pre code').forEach((block) => {
@@ -130,6 +133,7 @@ function streamReply(reply) {
                     }, 2000);
                 });
             });
+            scrollToBottom(); // 自动滚动到最底端
         }
     }
     showNextLetter(); // 开始流式输出
@@ -145,5 +149,8 @@ function addMessageToChatLog(message, className) {
     conversation.scrollTop = conversation.scrollHeight;
 }
 
-
+function scrollToBottom() {
+    const conversation = document.getElementById('conversation');
+    conversation.scrollTop = conversation.scrollHeight;
+}
 
