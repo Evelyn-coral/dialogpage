@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+}
+
+.dialogue-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+#conversation {
+    margin-bottom: 20px;
+    max-height: 600px; /* 设置最大高度 */
+    max-width: 800px; /* 设置最大宽度 */
+    overflow: auto; /* 当内容超过最大高度或宽度时显示滚动条 */
+}
+
+.message {
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    position: relative;
+    /* overflow: hidden; 确保内容不会超出消息框 */
+}
+
+.user-message {
+    background-color: #fff;
+    border: 1px solid #000;
+    align-self: flex-start;
+    margin-left: auto; /* Shift user message to the right */
+    margin-right: 20px; /* Shift user message to the right */
+    display: flex;
+    align-items: flex-start;
+}
+
+.reply-message {
+    background-color: #e6ccff;
+    border: 1px solid #9933ff;
+    align-self: flex-end;
+    margin-left: 20px; /* Shift reply message to the left */
+    display: flex;
+    align-items: flex-start;
+}
+
+.user-icon, .robot-icon {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+}
+
+.user-icon {
+    order: 1; /* Place icon after the message */
+}
+
+.robot-icon {
+    order: -1; /* Place icon before the message */
+}
+
+.input-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+textarea {
+    width: calc(100% - 80px); /* Adjust the width to be narrower */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none; /* Prevent manual resizing */
+    overflow: hidden; /* Hide scroll bar until needed */
+    flex-grow: 1;
+    min-height: 34px; /* Ensure the textarea is initially one line in height */
+}
+
+button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #9933ff;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #7a2cbf;
+}
+
+.icon-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.icon-label img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.user-label {
+    justify-content: flex-end;
+}
+
+.bot-label {
+    justify-content: flex-start;
+}
+
+.code-block {
+    border-radius: 4px;
+    color: #000;
+    font-family: Courier New, monospace !important;
+    font-size: 13px !important;
+    margin: 5px 0;
+    overflow: auto;
+    padding: 5px;
+    background-color: #f5f5f5;
+    max-width: 100%; /* 确保代码块不会超出消息框的宽度 */
+    box-sizing: border-box; /* 包括内边距和边框在内的宽度计算 */
+}

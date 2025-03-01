@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialogue Interface</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- 默认主题 -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css"> -->
+
+    <!-- GitHub主题 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/github.min.css">
+
+    <!-- 深色主题 -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/dark.min.css"> -->
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="dialogue-box">
+            <div id="conversation" style="overflow-y: auto; max-height: 400px;"></div>
+            <div class="input-container">
+                <textarea id="userInput" placeholder="Type your message here..." onkeydown="checkEnter(event)" oninput="adjustHeight()"></textarea>
+                <button onclick="submitInput()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
