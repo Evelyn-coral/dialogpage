@@ -54,7 +54,7 @@ function sendRequestToChatGPT(message) {
     fetch('https://api.chatanywhere.com.cn/v1/chat/completions', {
         method: 'POST',
         headers: {
-            'Authorization': 'sk-SmwGRrvyfNq8Qx073Sg6bWO2UB2ogIXzyU9IRu8XxywCPVhk ',
+            'Authorization': '--- ',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(request)
